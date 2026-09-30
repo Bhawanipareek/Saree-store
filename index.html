@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VANYA COUTURE — Premium Saree Showroom | Luxury Indian Fashion</title>
+  
+  <!-- SEO & Social Meta -->
+  <meta name="description" content="Discover premium sarees, bridal collections, Banarasi silk, designer sarees and timeless Indian fashion at Vanya Couture. Experience the art of draping in our flagship showroom.">
+  <meta name="keywords" content="luxury sarees, bridal saree showroom, Banarasi silk, Kanjeevaram silk, designer sarees Mumbai, Indian bridal couture, pure silk handloom">
+  <meta property="og:title" content="VANYA COUTURE — Premium Saree Showroom">
+  <meta property="og:description" content="Where tradition meets timeless elegance. Handcrafted bridal heirlooms and pure silk couture.">
+  <meta property="og:image" content="assets/images/hero-poster.jpg">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#121010">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Custom Cursor (Desktop Only) -->
+  <div class="custom-cursor-dot" aria-hidden="true"></div>
+  <div class="custom-cursor-ring" aria-hidden="true"></div>
+
+  <!-- Preloader Screen -->
+  <div class="preloader" id="preloader" aria-label="Loading Website Experience">
+    <div class="preloader-monogram">VC</div>
+    <div class="preloader-text">Loading Experience...</div>
+    <div class="preloader-bar-wrap">
+      <div class="preloader-bar" id="preloaderBar"></div>
+    </div>
+  </div>
+
+  <!-- Top Sticky / Transparent Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo" aria-label="Vanya Couture Home">
+        <span class="brand-title">Vanya Couture</span>
+        <span class="brand-sub">Haute Couture • Mumbai</span>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#collection" class="nav-link">Collection</a>
+        <a href="#bridal-edit" class="nav-link">Bridal Edit</a>
+        <a href="#products" class="nav-link">Showcase</a>
+        <a href="#showroom" class="nav-link">Showroom</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Desktop CTA -->
+      <div class="nav-cta-wrap">
+        <a href="#appointment" class="btn-luxury btn-luxury-outline">Book Appointment</a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Fullscreen Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="mobile-nav-links">
+      <a href="#hero" class="mobile-nav-link">Home</a>
+      <a href="#collection" class="mobile-nav-link">Collection</a>
+      <a href="#bridal-edit" class="mobile-nav-link">Bridal Edit</a>
+      <a href="#products" class="mobile-nav-link">Showcase</a>
+      <a href="#showroom" class="mobile-nav-link">Showroom</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+    <a href="#appointment" class="btn-luxury btn-luxury-primary mobile-cta">Book Appointment</a>
+  </div>
+
+  <!-- =========================================================================
+       MOST IMPORTANT FEATURE — SCROLL CONTROLLED HERO VIDEO
+       ========================================================================= -->
+  <section class="hero-scroll-wrapper" id="heroWrapper">
+    <div class="hero-pinned" id="hero">
+      
+      <!-- Video & Canvas Container -->
+      <div class="hero-video-container">
+        <!-- 60FPS Apple-grade Canvas Video Engine: Zero stutter, instant seek -->
+        <canvas id="heroCanvas"></canvas>
+        <!-- HTML5 Video Fallback -->
+        <video id="heroVideo" playsinline webkit-playsinline muted preload="auto" style="display:none;">
+          <source src="assets/videos/hero.mp4" type="video/mp4">
+        </video>
+        <!-- High-res Fallback Poster Image -->
+        <img class="hero-fallback-poster" src="assets/images/hero-poster.webp" alt="Vanya Couture Royal Saree Drape" onerror="this.src='assets/images/hero-poster.jpg'">
+      </div>
+
+      <!-- Dark Luxury Vignette Gradient Overlay -->
+      <div class="hero-overlay"></div>
+
+      <!-- Center Minimal Luxury Typography -->
+      <div class="hero-content">
+        <span class="hero-eyebrow">The Art of Draping</span>
+        <h1 class="hero-title">Where Tradition Meets Timeless Elegance</h1>
+        <p class="hero-subtext">Exquisite handwoven Banarasi silks, regal bridal heirlooms, and contemporary haute couture.</p>
+        
+        <div class="hero-cta-group">
+          <a href="#collection" class="btn-luxury btn-luxury-primary">Explore Collection</a>
+          <a href="#showroom" class="btn-luxury btn-luxury-secondary">Visit Showroom</a>
+        </div>
+      </div>
+
+      <!-- Hero Video Lock & Progress Controller -->
+      <div class="hero-video-lock-controller" id="heroLockController">
+        <div class="hero-video-badge" id="heroVideoBadge">
+          <span class="badge-icon" id="badgeIcon">🔒</span>
+          <span class="badge-text" id="badgeText">Scroll to Play Video • Complete to Unlock (0%)</span>
+        </div>
+        <div class="hero-video-track-bar">
+          <div class="hero-video-fill-bar" id="heroVideoFillBar"></div>
+        </div>
+      </div>
+
+      <!-- Scroll Down Indicator -->
+      <div class="hero-scroll-indicator" id="heroScrollIndicator" title="Complete video to scroll down">
+        <span class="scroll-text" id="scrollIndicatorText">Scroll to Play Video</span>
+        <div class="scroll-line-box">
+          <div class="scroll-line-active"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       9. INTRODUCTION SECTION
+       ========================================================================= -->
+  <section class="section-intro" id="introduction">
+    <div class="container">
+      <div class="intro-grid">
+        <div class="intro-image-wrapper">
+          <div class="intro-image-frame">
+            <img src="assets/images/intro-editorial.jpg" alt="Master Saree Craftsmanship" loading="lazy">
+          </div>
+          <div class="intro-badge-accent">
+            <span>30+</span>
+            <span>Years of Master Weaving</span>
+          </div>
+        </div>
+
+        <div class="intro-text-col">
+          <span class="eyebrow">Heritage & Haute Couture</span>
+          <h2 class="section-title">CRAFTED FOR MOMENTS THAT MATTER</h2>
+          <p class="intro-quote">"A saree is not merely fabric; it is six yards of living poetry, woven with devotion and graced by generations."</p>
+          <p class="intro-desc">Discover timeless sarees created with exquisite craftsmanship, luxurious fabrics and an enduring sense of elegance. From the historic looms of Varanasi to the master weavers of Kanchipuram, each drape in our showroom represents months of artisan labor, authentic gold zari work, and quintessential Indian opulence.</p>
+          
+          <div class="intro-signature">
+            <div class="intro-sig-text">
+              <strong>Vanya Singhania</strong>
+              <span>Founder & Creative Director</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       10. COLLECTION CATEGORIES SECTION
+       ========================================================================= -->
+  <section class="section-collection" id="collection">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Curated Categories</span>
+        <h2 class="section-title">OUR COLLECTION</h2>
+        <p class="section-subtitle">Timeless silhouettes. Contemporary elegance.</p>
+      </div>
+
+      <div class="collection-grid">
+        <!-- 1. Bridal Sarees -->
+        <a href="#products" class="collection-card">
+          <img src="assets/images/collection/bridal.jpg" alt="Bridal Sarees" loading="lazy">
+          <div class="collection-card-overlay"></div>
+          <div class="collection-card-content">
+            <div class="collection-card-number">01 / HEIRLOOM</div>
+            <h3 class="collection-card-title">Bridal Sarees</h3>
+            <p class="collection-card-desc">Regal vermilion, ruby crimson and pure gold bullion zari.</p>
+            <span class="collection-card-link">Explore Collection &rarr;</span>
+          </div>
+        </a>
+
+        <!-- 2. Banarasi Sarees -->
+        <a href="#products" class="collection-card">
+          <img src="assets/images/collection/banarasi.jpg" alt="Banarasi Sarees" loading="lazy">
+          <div class="collection-card-overlay"></div>
+          <div class="collection-card-content">
+            <div class="collection-card-number">02 / HERITAGE</div>
+            <h3 class="collection-card-title">Banarasi Sarees</h3>
+            <p class="collection-card-desc">Authentic Katan silk woven on ancestral Varanasi pit looms.</p>
+            <span class="collection-card-link">Explore Collection &rarr;</span>
+          </div>
+        </a>
+
+        <!-- 3. Silk Sarees -->
+        <a href="#products" class="collection-card">
+          <img src="assets/images/collection/silk.jpg" alt="Silk Sarees" loading="lazy">
+          <div class="collection-card-overlay"></div>
+          <div class="collection-card-content">
+            <div class="collection-card-number">03 / TRADITION</div>
+            <h3 class="collection-card-title">Silk Sarees</h3>
+            <p class="collection-card-desc">Heavyweight Kanjeevaram and temple borders with Korvai weave.</p>
+            <span class="collection-card-link">Explore Collection &rarr;</span>
+          </div>
+        </a>
+
+        <!-- 4. Designer Sarees -->
+        <a href="#products" class="collection-card">
+          <img src="assets/images/collection/designer.jpg" alt="Designer Sarees" loading="lazy">
+          <div class="collection-card-overlay"></div>
+          <div class="collection-card-content">
+            <div class="collection-card-number">04 / COUTURE</div>
+            <h3 class="collection-card-title">Designer Sarees</h3>
+            <p class="collection-card-desc">Sculptural silhouettes, fine georgette, and pearl embellishments.</p>
+            <span class="collection-card-link">Explore Collection &rarr;</span>
+          </div>
+        </a>
+
+        <!-- 5. Party Wear -->
+        <a href="#products" class="collection-card">
+          <img src="assets/images/collection/partywear.jpg" alt="Party Wear Sarees" loading="lazy">
+          <div class="collection-card-overlay"></div>
+          <div class="collection-card-content">
+            <div class="collection-card-number">05 / FESTIVE</div>
+            <h3 class="collection-card-title">Party Wear</h3>
+            <p class="collection-card-desc">Tissue organza and liquid satins crafted for celebratory soirées.</p>
+            <span class="collection-card-link">Explore Collection &rarr;</span>
+          </div>
+        </a>
+
+        <!-- 6. Handloom Collection -->
+        <a href="#products" class="collection-card">
+          <img src="assets/images/collection/handloom.jpg" alt="Handloom Collection" loading="lazy">
+          <div class="collection-card-overlay"></div>
+          <div class="collection-card-content">
+            <div class="collection-card-number">06 / ARTISAN</div>
+            <h3 class="collection-card-title">Handloom Collection</h3>
+            <p class="collection-card-desc">Chanderi gossamer, wild Tussar, and raw silk natural textures.</p>
+            <span class="collection-card-link">Explore Collection &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       11. FEATURED EDITORIAL COLLECTION ("THE BRIDAL EDIT")
+       ========================================================================= -->
+  <section class="section-featured-edit" id="bridal-edit">
+    <div class="container">
+      <div class="featured-editorial-grid">
+        <div class="featured-img-col">
+          <div class="featured-img-box">
+            <img src="assets/images/collection/featured-bridal.jpg" alt="The Bridal Edit by Vanya Couture" loading="lazy">
+            <div class="featured-gold-seal">
+              <span>Haute<br>Couture<br>Bridal</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="featured-text-col">
+          <span class="eyebrow featured-eyebrow">Editorial Feature</span>
+          <h2 class="section-title featured-title">THE BRIDAL EDIT</h2>
+          <p class="featured-quote">"Designed for unforgettable beginnings."</p>
+          <p class="featured-desc">The bridal trousseau is an intimate narrative of legacy, love, and ceremonial grace. Our Bridal Edit presents monumental drapes rendered in auspicious vermilion, deep burgundy, and royal emerald silks, woven with real electroplated gold zari that gleams with regal subtlety.</p>
+
+          <div class="featured-highlights">
+            <div class="highlight-item">
+              <h4>Pure Mulberry Silk</h4>
+              <p>Certified 4-ply organic silk yarn ensuring luxurious drape weight.</p>
+            </div>
+            <div class="highlight-item">
+              <h4>Antique Zari Craft</h4>
+              <p>Recreating 18th-century royal Mughal floral jaals and temple motifs.</p>
+            </div>
+            <div class="highlight-item">
+              <h4>Bespoke Trial Lounge</h4>
+              <p>Private bridal dressing rooms with customized ceremonial lighting.</p>
+            </div>
+            <div class="highlight-item">
+              <h4>Heirloom Preservation</h4>
+              <p>Delivered in cedarwood archival keepsake chests with brass locks.</p>
+            </div>
+          </div>
+
+          <a href="#appointment" class="btn-luxury btn-luxury-primary">Discover Bridal Collection</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       12. SAREE PRODUCT SHOWCASE (CURATED LUXURY GRID)
+       ========================================================================= -->
+  <section class="section-products" id="products">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Handpicked Masterpieces</span>
+        <h2 class="section-title">THE SHOWCASE</h2>
+        <p class="section-subtitle">Exemplary craftsmanship. Certified pure silks. Timeless value.</p>
+      </div>
+
+      <div class="product-grid">
+        <!-- Product 1 -->
+        <article class="product-card">
+          <div class="product-image-wrap">
+            <span class="product-tag">Pure Katan Silk</span>
+            <img src="assets/images/products/royal-banarasi.jpg" alt="Royal Banarasi Silk Saree" loading="lazy">
+            <button class="product-quickview-btn" data-quickview="royal-banarasi">View Details</button>
+          </div>
+          <div class="product-info">
+            <span class="product-collection-label">Heritage Collection</span>
+            <h3 class="product-title">Royal Banarasi Silk</h3>
+            <div class="product-price">₹18,500</div>
+          </div>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="product-card">
+          <div class="product-image-wrap">
+            <span class="product-tag">Temple Zari</span>
+            <img src="assets/images/products/kanjeevaram-brocade.jpg" alt="Crimson Kanjeevaram Brocade Saree" loading="lazy">
+            <button class="product-quickview-btn" data-quickview="kanjeevaram-brocade">View Details</button>
+          </div>
+          <div class="product-info">
+            <span class="product-collection-label">Temple Collection</span>
+            <h3 class="product-title">Crimson Kanjeevaram Brocade</h3>
+            <div class="product-price">₹24,000</div>
+          </div>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="product-card">
+          <div class="product-image-wrap">
+            <span class="product-tag">Festive Tissue</span>
+            <img src="assets/images/products/gilded-organza.jpg" alt="Gilded Tissue Organza Saree" loading="lazy">
+            <button class="product-quickview-btn" data-quickview="gilded-organza">View Details</button>
+          </div>
+          <div class="product-info">
+            <span class="product-collection-label">Noor Festive Edit</span>
+            <h3 class="product-title">Gilded Tissue Organza</h3>
+            <div class="product-price">₹16,200</div>
+          </div>
+        </article>
+
+        <!-- Product 4 -->
+        <article class="product-card">
+          <div class="product-image-wrap">
+            <span class="product-tag">Handloom Zari</span>
+            <img src="assets/images/products/vintage-chanderi.jpg" alt="Vintage Chanderi Zari Saree" loading="lazy">
+            <button class="product-quickview-btn" data-quickview="vintage-chanderi">View Details</button>
+          </div>
+          <div class="product-info">
+            <span class="product-collection-label">Royal Weaver Series</span>
+            <h3 class="product-title">Vintage Chanderi Zari</h3>
+            <div class="product-price">₹14,800</div>
+          </div>
+        </article>
+
+        <!-- Product 5 -->
+        <article class="product-card">
+          <div class="product-image-wrap">
+            <span class="product-tag">Hand Chikankari</span>
+            <img src="assets/images/products/rose-chikankari.jpg" alt="Rose Dust Georgette Chikankari Saree" loading="lazy">
+            <button class="product-quickview-btn" data-quickview="rose-chikankari">View Details</button>
+          </div>
+          <div class="product-info">
+            <span class="product-collection-label">Couturier Edit</span>
+            <h3 class="product-title">Rose Dust Chikankari</h3>
+            <div class="product-price">₹21,500</div>
+          </div>
+        </article>
+
+        <!-- Product 6 -->
+        <article class="product-card">
+          <div class="product-image-wrap">
+            <span class="product-tag">Wild Tussar</span>
+            <img src="assets/images/products/indigo-raw-silk.jpg" alt="Midnight Indigo Raw Silk Saree" loading="lazy">
+            <button class="product-quickview-btn" data-quickview="indigo-raw-silk">View Details</button>
+          </div>
+          <div class="product-info">
+            <span class="product-collection-label">Artisan Weaves</span>
+            <h3 class="product-title">Midnight Indigo Raw Silk</h3>
+            <div class="product-price">₹19,900</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       13. LOOKBOOK SECTION (CINEMATIC PARALLAX)
+       ========================================================================= -->
+  <section class="section-lookbook" id="lookbook">
+    <div class="lookbook-parallax-bg"></div>
+    <div class="lookbook-overlay"></div>
+    <div class="lookbook-content">
+      <span class="eyebrow lookbook-eyebrow">Spring / Summer Archive</span>
+      <h2 class="lookbook-title">THE LOOKBOOK</h2>
+      <p class="lookbook-subtext">"Elegance in every drape."</p>
+      <a href="#appointment" class="btn-luxury btn-luxury-primary">Schedule Lookbook Consultation</a>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       14. SHOWROOM EXPERIENCE
+       ========================================================================= -->
+  <section class="section-showroom" id="showroom">
+    <div class="container">
+      <div class="showroom-experience-grid">
+        <div class="showroom-visual-wrap">
+          <div class="showroom-visual-frame">
+            <img src="assets/images/showroom/showroom-main.jpg" alt="Vanya Couture Flagship Showroom Interior" loading="lazy">
+          </div>
+        </div>
+
+        <div class="showroom-info-col">
+          <span class="eyebrow">Bespoke Experience</span>
+          <h2 class="section-title">VISIT OUR SHOWROOM</h2>
+          <p class="section-subtitle">Experience the collection in person.</p>
+          <p class="intro-desc">Step into an oasis of Indian luxury nestled in Mumbai's historic heritage district. Our flagship showroom provides an intimate sensory journey where you can touch the weight of handloom silk, examine antique gold zari embroidery under bespoke bridal lighting, and enjoy personal drape styling by our veteran consultants.</p>
+
+          <div class="showroom-details-card">
+            <div class="showroom-detail-row">
+              <div class="showroom-detail-icon">📍</div>
+              <div class="showroom-detail-meta">
+                <h4>Showroom Address</h4>
+                <p>74 Heritage Avenue, Kala Ghoda Arts District, Mumbai, Maharashtra 400001</p>
+              </div>
+            </div>
+
+            <div class="showroom-detail-row">
+              <div class="showroom-detail-icon">🕰️</div>
+              <div class="showroom-detail-meta">
+                <h4>Opening Hours</h4>
+                <p>Monday – Saturday: 11:00 AM – 8:00 PM<br>Sunday: By Private VIP Appointment</p>
+              </div>
+            </div>
+
+            <div class="showroom-detail-row">
+              <div class="showroom-detail-icon">📞</div>
+              <div class="showroom-detail-meta">
+                <h4>Concierge Desk</h4>
+                <p>Phone: +91 98765 43210 &nbsp;|&nbsp; WhatsApp: Direct Concierge</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="showroom-buttons">
+            <a href="https://maps.google.com/?q=Kala+Ghoda+Fort+Mumbai" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-luxury-dark">Get Directions</a>
+            <a href="#appointment" class="btn-luxury btn-luxury-outline" style="color:var(--charcoal); border-color:var(--gold);">Book Appointment</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       15. SHOWROOM GALLERY (MASONRY STYLE)
+       ========================================================================= -->
+  <section class="section-gallery" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Atmosphere & Atelier</span>
+        <h2 class="section-title">THE SHOWROOM GALLERY</h2>
+        <p class="section-subtitle">A glimpse into our spaces, craft looms, and heirloom archives.</p>
+      </div>
+
+      <div class="gallery-masonry">
+        <!-- 1. Exterior -->
+        <div class="gallery-item gallery-item-wide">
+          <img src="assets/images/showroom/exterior.jpg" alt="Heritage Exterior Facade" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Heritage Architecture</div>
+            <div class="gallery-sub">Flagship Facade</div>
+          </div>
+        </div>
+
+        <!-- 2. Interior Lounge -->
+        <div class="gallery-item gallery-item-tall">
+          <img src="assets/images/showroom/interior-lounge.jpg" alt="Luxury Boutique Lounge" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">The Velvet Lounge</div>
+            <div class="gallery-sub">Private Styling Suite</div>
+          </div>
+        </div>
+
+        <!-- 3. Drape Display -->
+        <div class="gallery-item">
+          <img src="assets/images/showroom/drape-display.jpg" alt="Bridal Saree Drape Display" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Bridal Silhouette</div>
+            <div class="gallery-sub">Mannequin Exhibit</div>
+          </div>
+        </div>
+
+        <!-- 4. Bridal Trial Suite -->
+        <div class="gallery-item">
+          <img src="assets/images/showroom/bridal-suite.jpg" alt="VIP Bridal Suite" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">The Bridal Salon</div>
+            <div class="gallery-sub">Trial Mirror Suite</div>
+          </div>
+        </div>
+
+        <!-- 5. Artisan Loom -->
+        <div class="gallery-item">
+          <img src="assets/images/showroom/artisan-loom.jpg" alt="Artisan Silk Weaving Loom" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Ancestral Looms</div>
+            <div class="gallery-sub">Master Weavers</div>
+          </div>
+        </div>
+
+        <!-- 6. Gold Zari Detail -->
+        <div class="gallery-item">
+          <img src="assets/images/showroom/zari-detail.jpg" alt="Gold Zari Embroidery Detail" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Gilded Threadwork</div>
+            <div class="gallery-sub">Micro Zari Embroidery</div>
+          </div>
+        </div>
+
+        <!-- 7. Packaging -->
+        <div class="gallery-item gallery-item-wide">
+          <img src="assets/images/showroom/packaging.jpg" alt="Luxury Keepsake Packaging" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">Keepsake Packaging</div>
+            <div class="gallery-sub">Bespoke Cedarwood Boxes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       16. WHY CHOOSE US
+       ========================================================================= -->
+  <section class="section-why-us" id="heritage">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">The Atelier Standards</span>
+        <h2 class="section-title">WHY CHOOSE US</h2>
+        <p class="section-subtitle">Upholding the finest traditions of Indian royal textiles.</p>
+      </div>
+
+      <div class="pillars-grid">
+        <!-- Pillar 1 -->
+        <div class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="pillar-title">Heritage Craftsmanship</h3>
+          <p class="pillar-desc">Authentic handloom techniques preserved across six generations of master artisans in Varanasi and Kanchipuram.</p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 3a9 9 0 0 0 0 18v-9h9"/>
+            </svg>
+          </div>
+          <h3 class="pillar-title">Premium Fabrics</h3>
+          <p class="pillar-desc">Certified 100% pure Mulberry silk, tested electroplated gold bullion zari, and featherweight organza of uncompromising grade.</p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <svg viewBox="0 0 24 24">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3 class="pillar-title">Curated Collection</h3>
+          <p class="pillar-desc">Each saree is a limited single-edition or boutique batch, curated for discerning women seeking effortless regal poise.</p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="pillar-card">
+          <div class="pillar-icon-wrap">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3 class="pillar-title">Personal Styling</h3>
+          <p class="pillar-desc">One-on-one appointments with seasoned bridal drape masters, custom blouse tailoring consultations, and trousseau curation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       17. TESTIMONIALS SECTION
+       ========================================================================= -->
+  <section class="section-testimonials">
+    <div class="container testimonials-container">
+      <div class="quote-glyph">“</div>
+      
+      <div class="testimonial-track">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-slide active">
+          <p class="testimonial-quote">"The Banarasi silk saree I acquired from Vanya Couture for my wedding reception was breathtaking. The subtle metallic shimmer and soft drape made me feel truly regal."</p>
+          <div class="testimonial-author">Dr. Gayatri Mehta</div>
+          <div class="testimonial-city">Mumbai & London</div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-slide">
+          <p class="testimonial-quote">"A rare boutique that respects the authenticity of Indian textiles without making them feel archaic. Their showroom experience in Kala Ghoda is pure indulgence."</p>
+          <div class="testimonial-author">Ananya Roy Kapoor</div>
+          <div class="testimonial-city">New Delhi</div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-slide">
+          <p class="testimonial-quote">"The personal styling team helped me find the exact Kanjeevaram shade I dreamt of for years. The handwoven zari work is museum quality. An absolute heirloom."</p>
+          <div class="testimonial-author">Meera Sundaram</div>
+          <div class="testimonial-city">San Francisco & Chennai</div>
+        </div>
+      </div>
+
+      <div class="testimonial-controls">
+        <button class="test-btn" id="testPrevBtn" aria-label="Previous Testimonial">&larr;</button>
+        <div class="test-dots"></div>
+        <button class="test-btn" id="testNextBtn" aria-label="Next Testimonial">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       18. INSTAGRAM SECTION ("FOLLOW OUR WORLD")
+       ========================================================================= -->
+  <section class="section-instagram" id="instagram">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Visual Journal</span>
+        <h2 class="section-title">FOLLOW OUR WORLD</h2>
+        <p class="section-subtitle">@vanyacouture on Instagram</p>
+      </div>
+
+      <div class="instagram-grid">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-card">
+          <img src="assets/images/instagram/insta-1.jpg" alt="Instagram Post 1" loading="lazy">
+          <div class="instagram-overlay"><span>✦</span></div>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-card">
+          <img src="assets/images/instagram/insta-2.jpg" alt="Instagram Post 2" loading="lazy">
+          <div class="instagram-overlay"><span>✦</span></div>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-card">
+          <img src="assets/images/instagram/insta-3.jpg" alt="Instagram Post 3" loading="lazy">
+          <div class="instagram-overlay"><span>✦</span></div>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-card">
+          <img src="assets/images/instagram/insta-4.jpg" alt="Instagram Post 4" loading="lazy">
+          <div class="instagram-overlay"><span>✦</span></div>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-card">
+          <img src="assets/images/instagram/insta-5.jpg" alt="Instagram Post 5" loading="lazy">
+          <div class="instagram-overlay"><span>✦</span></div>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-card">
+          <img src="assets/images/instagram/insta-6.jpg" alt="Instagram Post 6" loading="lazy">
+          <div class="instagram-overlay"><span>✦</span></div>
+        </a>
+      </div>
+
+      <div class="instagram-cta-wrap">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-luxury-outline" style="color:var(--charcoal); border-color:var(--gold);">Follow on Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       19. APPOINTMENT BOOKING SECTION
+       ========================================================================= -->
+  <section class="section-appointment" id="appointment">
+    <div class="container">
+      <div class="appointment-wrapper">
+        <div class="appointment-header">
+          <span class="eyebrow">Personal Styling Concierge</span>
+          <h2 class="section-title">FIND YOUR PERFECT SAREE</h2>
+          <p class="section-subtitle" style="margin: 0 auto;">Reserve a private styling appointment in our flagship showroom.</p>
+        </div>
+
+        <form class="appointment-form" id="appointmentForm">
+          <div class="form-field">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" placeholder="Lady or Gentleman's Full Name" required>
+          </div>
+
+          <div class="form-field">
+            <label for="phone">Phone / WhatsApp *</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="name@domain.com" required>
+          </div>
+
+          <div class="form-field">
+            <label for="occasion">Occasion of Interest</label>
+            <select id="occasion" name="occasion">
+              <option value="Bridal Trousseau">Bridal Trousseau</option>
+              <option value="Wedding Reception">Wedding Reception</option>
+              <option value="Sangeet / Mehendi">Sangeet / Mehendi</option>
+              <option value="Festive Heirloom">Festive Heirloom</option>
+              <option value="Private Collection Viewing">Private Collection Viewing</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="date">Preferred Date *</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+
+          <div class="form-field">
+            <label for="time">Preferred Time Slot *</label>
+            <select id="time" name="time">
+              <option value="11:30 AM – 1:00 PM">11:30 AM – 1:00 PM (Morning Tea)</option>
+              <option value="2:30 PM – 4:00 PM">2:30 PM – 4:00 PM (Afternoon Salon)</option>
+              <option value="5:00 PM – 6:30 PM">5:00 PM – 6:30 PM (Evening Soirée)</option>
+              <option value="7:00 PM – 8:30 PM">7:00 PM – 8:30 PM (VIP Night Trial)</option>
+            </select>
+          </div>
+
+          <div class="form-field form-group-full">
+            <label for="message">Special Preferences or Blouse Notes</label>
+            <textarea id="message" name="message" placeholder="Tell us about color preferences, bridal dates, or specific weaves you wish to view..."></textarea>
+          </div>
+
+          <div class="appointment-actions">
+            <button type="submit" class="btn-luxury btn-luxury-primary appointment-submit">Book Appointment</button>
+            <a href="https://wa.me/919876543210?text=Hello%20Vanya%20Couture%2C%20I%20would%20like%20to%20book%20a%20private%20showroom%20appointment." target="_blank" rel="noopener noreferrer" class="appointment-wa-alt">
+              <span>✦</span> Or Chat Directly on WhatsApp
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       20. CONTACT & LOCATION SECTION
+       ========================================================================= -->
+  <section class="section-contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info-col">
+          <span class="eyebrow">Connect With Us</span>
+          <h2 class="section-title">THE ATELIER DESK</h2>
+          <p class="section-subtitle">We welcome your inquiries, bespoke bridal consultations, and worldwide shipping requests.</p>
+
+          <div class="contact-card-list">
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <h4>Direct Telephone</h4>
+                <p><a href="tel:+919876543210">+91 98765 43210</a> &nbsp;|&nbsp; +91 (022) 2284 9900</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">💬</div>
+              <div>
+                <h4>WhatsApp Concierge</h4>
+                <p><a href="https://wa.me/919876543210" class="wa-concierge-link">+91 98765 43210 (Direct Concierge Chat)</a></p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div>
+                <h4>Email Inquiries</h4>
+                <p><a href="mailto:concierge@vanyacouture.com">concierge@vanyacouture.com</a></p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <h4>Flagship Showroom</h4>
+                <p>74 Heritage Avenue, Kala Ghoda Arts District, Fort, Mumbai, MH 400001</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-map-col">
+          <div class="map-container-box">
+            <div class="map-icon-pin">✦</div>
+            <div class="map-address-highlight">Kala Ghoda Flagship Showroom</div>
+            <p class="map-subtext">Situated in the heart of Mumbai's premier art, design and heritage promenade. Valet parking provided.</p>
+            <a href="https://maps.google.com/?q=Kala+Ghoda+Fort+Mumbai" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-luxury-primary">
+              View on Google Maps &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       21. FOOTER
+       ========================================================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo">
+            <span class="brand-title">Vanya Couture</span>
+            <span class="brand-sub">Haute Couture • Mumbai</span>
+          </a>
+          <p class="footer-tagline">"Where tradition meets timeless elegance." Preserving India's illustrious textile heritage through conscious luxury.</p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="Instagram">IG</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="Facebook">FB</a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="YouTube">YT</a>
+            <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" class="footer-social-icon wa-concierge-link" aria-label="WhatsApp">WA</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <div class="footer-links-list">
+            <a href="#hero">Home</a>
+            <a href="#collection">Collection</a>
+            <a href="#bridal-edit">The Bridal Edit</a>
+            <a href="#products">Saree Showcase</a>
+            <a href="#showroom">Visit Showroom</a>
+            <a href="#appointment">Book Appointment</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Collections</h4>
+          <div class="footer-links-list">
+            <a href="#products">Bridal Sarees</a>
+            <a href="#products">Banarasi Katan Silk</a>
+            <a href="#products">Kanjeevaram Temple Zari</a>
+            <a href="#products">Chanderi Brocades</a>
+            <a href="#products">Gilded Organza</a>
+            <a href="#products">Lucknowi Chikankari</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>The Gazette</h4>
+          <p class="footer-newsletter-text">Subscribe for private invitations to trunk shows, archival drape viewings, and festive launches.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to The Gazette.');">
+            <input type="email" placeholder="Your email address..." required>
+            <button type="submit">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 VANYA COUTURE. All Rights Reserved. Mastercrafted in India.</div>
+        <div class="footer-legal-links">
+          <a href="#contact">Privacy Policy</a>
+          <a href="#contact">Terms & Conditions</a>
+          <a href="#contact">Authentication Certificate</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       28. FLOATING WHATSAPP BUTTON
+       ========================================================================= -->
+  <a href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20your%20saree%20collection." 
+     id="floatingWhatsApp" 
+     class="floating-whatsapp" 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     aria-label="Chat with Concierge on WhatsApp"
+     title="Instant Concierge on WhatsApp">
+    <svg viewBox="0 0 32 32">
+      <path d="M16 2a13.9 13.9 0 0 0-12 21L2 30l7.2-1.9A13.9 13.9 0 1 0 16 2zm0 25.4a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.3 1.1 1.2-4.2-.3-.4A11.5 11.5 0 1 1 16 27.4zm6.3-8.6c-.3-.2-2-.9-2.3-1s-.5-.2-.8.2-.9 1.1-1.1 1.3-.4.2-.7.1a9.2 9.2 0 0 1-2.7-1.7 10.2 10.2 0 0 1-1.9-2.3c-.2-.3 0-.5.1-.7s.3-.4.5-.6a2.3 2.3 0 0 0 .3-.5.7.7 0 0 0 0-.6c-.1-.2-.8-1.9-1.1-2.6s-.6-.6-.8-.6h-.7a1.4 1.4 0 0 0-1 .5 4.3 4.3 0 0 0-1.3 3.2 7.5 7.5 0 0 0 1.6 4 17.2 17.2 0 0 0 6.6 5.8 22.4 22.4 0 0 0 2.2.8 5.3 5.3 0 0 0 2.4.2 3.9 3.9 0 0 0 2.6-1.8 3.2 3.2 0 0 0 .2-1.8c-.2-.2-.5-.3-.8-.5z"/>
+    </svg>
+  </a>
+
+  <!-- =========================================================================
+       MODAL: PRODUCT QUICK VIEW & GALLERY LIGHTBOX
+       ========================================================================= -->
+  <div class="modal-backdrop" id="quickviewModal" role="dialog" aria-modal="true" aria-label="Product Details Modal">
+    <div class="modal-window">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Modal">&times;</button>
+      <div class="modal-media">
+        <img id="modalImg" src="assets/images/products/royal-banarasi.jpg" alt="Selected Saree">
+      </div>
+      <div class="modal-details">
+        <div class="modal-tag" id="modalTag">Heritage Katan Silk</div>
+        <h3 class="modal-title" id="modalTitle">Royal Banarasi Silk</h3>
+        <div class="modal-price" id="modalPrice">₹18,500</div>
+        <p class="intro-desc" id="modalDesc">Detailed description will appear here.</p>
+        <ul class="modal-specs" id="modalSpecsList">
+          <li>• Certified Pure Silk</li>
+        </ul>
+        <div class="modal-actions">
+          <a id="modalWaBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-luxury-primary">
+            Inquire on WhatsApp
+          </a>
+          <a href="#appointment" class="btn-luxury btn-luxury-outline" onclick="document.getElementById('quickviewModal').classList.remove('active'); document.body.style.overflow='';">
+            Book Showroom Trial
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Toast Notification -->
+  <div class="toast-msg" id="toastMsg" role="alert"></div>
+
+  <!-- JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>
