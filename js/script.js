@@ -174,12 +174,10 @@ function initNavbar() {
 // ----------------------------------------------------------------------------
 // 6. MOST IMPORTANT FEATURE: 60FPS CANVAS VIDEO ENGINE & STRICT SCROLL LOCK
 // Rule: STRICT SCROLL LOCK — Page will NOT scroll down until video is 100% complete
-// Tech: 60FPS Apple-grade Canvas Sequence (Zero seek stutter / 0ms lag)
+// Tech: 60FPS Canvas Sequence with Nearest-Frame Fallback & Mobile Touch Engine
 // ----------------------------------------------------------------------------
 function initHeroVideoEngine() {
   const canvas = document.getElementById("heroCanvas");
-  const video = document.getElementById("heroVideo");
-  const videoContainer = document.querySelector(".hero-video-container");
   const heroContent = document.querySelector(".hero-content");
   const scrollIndicator = document.getElementById("heroScrollIndicator");
   const scrollText = document.getElementById("scrollIndicatorText");
@@ -187,21 +185,29 @@ function initHeroVideoEngine() {
   const badgeIcon = document.getElementById("badgeIcon");
   const badgeText = document.getElementById("badgeText");
   const fillBar = document.getElementById("heroVideoFillBar");
+  const skipBtn = document.getElementById("heroSkipBtn");
 
   if (!canvas) return;
 
   const ctx = canvas.getContext("2d", { alpha: false });
   const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const TOTAL_FRAMES = 120;
-  const frames = [];
+  const frames = new Array(TOTAL_FRAMES);
   let loadedFramesCount = 0;
-  let isHeroLocked = true; // STRICT SCROLL LOCK
+  let isHeroLocked = true; // STRICT SCROLL LOCK ACTIVE
   let targetProgress = 0;
   let currentProgress = 0;
   let touchStartY = 0;
+  let touchStartX = 0;
+  let isAutoPlaying = false;
+  let autoPlayTimer = null;
   let lastDrawnIndex = -1;
 
-  // 1. Resize canvas to display resolution
+  // Initially lock scroll on page load
+  document.documentElement.classList.add("hero-locked");
+  document.body.classList.add("hero-locked");
+
+  // 1. Resize canvas properly with device pixel ratio
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -210,25 +216,56 @@ function initHeroVideoEngine() {
   window.addEventListener("resize", resizeCanvas);
   resizeCanvas();
 
-  // 2. Preload all 120 WebP video frames for instantaneous 60fps scrub
-  for (let i = 1; i <= TOTAL_FRAMES; i++) {
+  // 2. Preload frames with Two-Tier Priority:
+  // First load every 10th frame for instant timeline scrub readiness, then all others
+  function loadFrame(idx, onFirst) {
+    if (frames[idx]) return;
     const img = new Image();
-    const num = String(i).padStart(4, "0");
+    const num = String(idx + 1).padStart(4, "0");
     img.src = `assets/frames/frame_${num}.webp`;
     img.onload = () => {
       loadedFramesCount++;
-      if (i === 1 || loadedFramesCount === 1) {
+      if (onFirst || loadedFramesCount === 1) {
         renderFrame(0);
       }
     };
-    frames.push(img);
+    frames[idx] = img;
   }
 
-  // 3. Ultra-fast Canvas Frame Render (< 0.2ms per frame)
+  // Load keyframe milestones first (0, 10, 20... 119)
+  for (let i = 0; i < TOTAL_FRAMES; i += 10) {
+    loadFrame(i, i === 0);
+  }
+  // Load remaining frames
+  for (let i = 0; i < TOTAL_FRAMES; i++) {
+    loadFrame(i, false);
+  }
+
+  // 3. Fallback: Find nearest already loaded frame if target frame is still downloading
+  function getBestAvailableFrame(index) {
+    const safeIdx = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
+    if (frames[safeIdx] && frames[safeIdx].complete && frames[safeIdx].naturalWidth > 0) {
+      return frames[safeIdx];
+    }
+    // Search outward for closest ready frame
+    for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+      const left = safeIdx - offset;
+      if (left >= 0 && frames[left] && frames[left].complete && frames[left].naturalWidth > 0) {
+        return frames[left];
+      }
+      const right = safeIdx + offset;
+      if (right < TOTAL_FRAMES && frames[right] && frames[right].complete && frames[right].naturalWidth > 0) {
+        return frames[right];
+      }
+    }
+    return null;
+  }
+
+  // 4. Ultra-fast Canvas Frame Render (< 0.2ms)
   function renderFrame(index) {
     const safeIdx = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
-    const img = frames[safeIdx];
-    if (!img || !img.complete || img.naturalWidth === 0) return;
+    const img = getBestAvailableFrame(safeIdx);
+    if (!img) return;
 
     lastDrawnIndex = safeIdx;
     const cw = canvas.width;
@@ -236,7 +273,7 @@ function initHeroVideoEngine() {
     const iw = img.naturalWidth;
     const ih = img.naturalHeight;
 
-    // Cover math
+    // Cover math (centered)
     const ratio = Math.max(cw / iw, ch / ih);
     const nw = iw * ratio;
     const nh = ih * ratio;
@@ -246,7 +283,7 @@ function initHeroVideoEngine() {
     ctx.drawImage(img, 0, 0, iw, ih, nx, ny, nw, nh);
   }
 
-  // 4. Update UI & Lock State
+  // 5. Update UI & Lock State
   function updateLockUI(progress) {
     const percent = Math.min(100, Math.max(0, Math.round(progress * 100)));
     if (fillBar) {
@@ -260,13 +297,15 @@ function initHeroVideoEngine() {
     } else {
       if (!isHeroLocked && window.scrollY <= 10) {
         isHeroLocked = true;
+        document.documentElement.classList.add("hero-locked");
+        document.body.classList.add("hero-locked");
         if (badge) badge.classList.remove("unlocked");
         if (badgeIcon) badgeIcon.textContent = "🔒";
         if (scrollIndicator) scrollIndicator.classList.remove("unlocked");
         if (scrollText) scrollText.textContent = "Scroll to Play Video";
       }
       if (badgeText) {
-        badgeText.textContent = `Scroll to Play Video • Complete to Unlock (${percent}%)`;
+        badgeText.textContent = `Swipe / Tap to Play Video (${percent}%)`;
       }
     }
 
@@ -281,29 +320,25 @@ function initHeroVideoEngine() {
 
   function unlockShowroomScroll() {
     isHeroLocked = false;
+    isAutoPlaying = false;
     targetProgress = 1;
     currentProgress = 1;
+    document.documentElement.classList.remove("hero-locked");
+    document.body.classList.remove("hero-locked");
+
     if (badge) badge.classList.add("unlocked");
     if (badgeIcon) badgeIcon.textContent = "✦";
     if (badgeText) badgeText.innerHTML = "Video Complete • Scroll Down to Enter Showroom &darr;";
     if (fillBar) fillBar.style.width = "100%";
-    if (scrollIndicator) {
-      scrollIndicator.classList.add("unlocked");
-    }
-    if (scrollText) {
-      scrollText.textContent = "Scroll to Explore Showroom";
-    }
+    if (scrollIndicator) scrollIndicator.classList.add("unlocked");
+    if (scrollText) scrollText.textContent = "Scroll to Explore Showroom";
   }
 
-  // 5. MOUSE WHEEL INTERCEPTION: Strictly locked until video reaches 100%
+  // 6. MOUSE WHEEL (Desktop)
   window.addEventListener("wheel", (e) => {
-    const isAtTop = window.scrollY <= 15;
-
-    if (isAtTop && isHeroLocked) {
-      // PREVENT PAGE FROM SCROLLING DOWN
+    if (isHeroLocked) {
       e.preventDefault();
-
-      // Smooth step calculation (supports precision trackpad and notched wheels)
+      isAutoPlaying = false;
       const delta = e.deltaY;
       const step = Math.sign(delta) * Math.min(0.065, Math.max(0.015, Math.abs(delta) * 0.00055));
       targetProgress = Math.max(0, Math.min(1, targetProgress + step));
@@ -311,58 +346,75 @@ function initHeroVideoEngine() {
       return;
     }
 
-    // Allow reverse scrubbing if user is at top and scrolls upward
-    if (isAtTop && !isHeroLocked && e.deltaY < 0 && targetProgress > 0) {
+    // Reverse if user scrolled back up to top
+    if (window.scrollY <= 5 && e.deltaY < 0 && targetProgress > 0) {
       const step = Math.sign(e.deltaY) * Math.min(0.065, Math.max(0.015, Math.abs(e.deltaY) * 0.00055));
       targetProgress = Math.max(0, Math.min(1, targetProgress + step));
       updateLockUI(targetProgress);
     }
   }, { passive: false });
 
-  // 6. TOUCH INTERCEPTION (MOBILE)
-  window.addEventListener("touchstart", (e) => {
+  // 7. TOUCH GESTURES (Mobile Phone)
+  const heroSection = document.getElementById("hero") || window;
+
+  heroSection.addEventListener("touchstart", (e) => {
     if (e.touches && e.touches[0]) {
       touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+      isAutoPlaying = false; // user interaction pauses auto-play
     }
   }, { passive: true });
 
-  window.addEventListener("touchmove", (e) => {
-    const isAtTop = window.scrollY <= 15;
-    if (isAtTop && isHeroLocked && e.touches && e.touches[0]) {
-      const currentY = e.touches[0].clientY;
-      const diffY = touchStartY - currentY;
-      
-      e.preventDefault();
+  heroSection.addEventListener("touchmove", (e) => {
+    if (!isHeroLocked) return;
+    if (!e.touches || !e.touches[0]) return;
 
-      const step = (diffY / window.innerHeight) * 1.1;
-      targetProgress = Math.max(0, Math.min(1, targetProgress + step));
-      touchStartY = currentY;
-      updateLockUI(targetProgress);
-    }
-  }, { passive: false });
+    const currentY = e.touches[0].clientY;
+    const currentX = e.touches[0].clientX;
+    const diffY = touchStartY - currentY; // positive = swipe up (scroll down)
+    const diffX = touchStartX - currentX;
 
-  // 7. KEYBOARD INTERCEPTION
+    // Use dominant axis
+    const delta = Math.abs(diffY) > Math.abs(diffX) ? diffY : diffX;
+    
+    // Natural mobile sensitivity: ~220px drag completes ~40% of video
+    const step = (delta / 220) * 0.4;
+    targetProgress = Math.max(0, Math.min(1, targetProgress + step));
+
+    touchStartY = currentY;
+    touchStartX = currentX;
+    updateLockUI(targetProgress);
+  }, { passive: true });
+
+  // 8. KEYBOARD (Desktop accessibility)
   window.addEventListener("keydown", (e) => {
-    const isAtTop = window.scrollY <= 15;
-    if (isAtTop && isHeroLocked) {
+    if (isHeroLocked) {
       if (["ArrowDown", "PageDown", " "].includes(e.key)) {
         e.preventDefault();
+        isAutoPlaying = false;
         targetProgress = Math.min(1, targetProgress + 0.08);
         updateLockUI(targetProgress);
       } else if (["ArrowUp", "PageUp"].includes(e.key)) {
         e.preventDefault();
+        isAutoPlaying = false;
         targetProgress = Math.max(0, targetProgress - 0.08);
         updateLockUI(targetProgress);
       }
     }
   });
 
-  // 8. 60FPS SILKY SMOOTH LERP LOOP
+  // 9. 60FPS RAF LOOP
   const renderLoop = () => {
+    // If auto-playing on tap
+    if (isAutoPlaying && isHeroLocked) {
+      targetProgress = Math.min(1, targetProgress + 0.0035);
+      updateLockUI(targetProgress);
+    }
+
     if (!isReducedMotion) {
       const diff = targetProgress - currentProgress;
       if (Math.abs(diff) > 0.0005) {
-        currentProgress += diff * 0.38; // 0.38 gives instant, smooth response
+        currentProgress += diff * 0.38;
         const frameIdx = Math.round(currentProgress * (TOTAL_FRAMES - 1));
         if (frameIdx !== lastDrawnIndex) {
           renderFrame(frameIdx);
@@ -373,7 +425,33 @@ function initHeroVideoEngine() {
   };
   requestAnimationFrame(renderLoop);
 
-  // 9. Links & Nav Click Handlers
+  // 10. TAP / CLICK TO PLAY OR UNLOCK (Mobile friendly)
+  if (badge) {
+    badge.addEventListener("click", () => {
+      if (isHeroLocked) {
+        // Toggle auto-play on phone
+        isAutoPlaying = !isAutoPlaying;
+        if (isAutoPlaying) {
+          if (badgeText) badgeText.textContent = "Playing Video... Tap to Pause";
+        }
+      } else {
+        const intro = document.getElementById("introduction");
+        if (intro) intro.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  // Skip button allows direct entry
+  if (skipBtn) {
+    skipBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      unlockShowroomScroll();
+      const intro = document.getElementById("introduction");
+      if (intro) intro.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  // Nav links unlock
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", () => {
       unlockShowroomScroll();
@@ -383,20 +461,8 @@ function initHeroVideoEngine() {
   if (scrollIndicator) {
     scrollIndicator.addEventListener("click", () => {
       if (isHeroLocked) {
-        targetProgress = Math.min(1, targetProgress + 0.25);
+        targetProgress = Math.min(1, targetProgress + 0.35);
         updateLockUI(targetProgress);
-      } else {
-        const intro = document.getElementById("introduction");
-        if (intro) intro.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  }
-
-  if (badge) {
-    badge.addEventListener("click", () => {
-      if (isHeroLocked) {
-        targetProgress = 1;
-        updateLockUI(1);
       } else {
         const intro = document.getElementById("introduction");
         if (intro) intro.scrollIntoView({ behavior: "smooth" });

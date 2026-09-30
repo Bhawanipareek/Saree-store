@@ -77,6 +77,18 @@ body {
   position: relative;
 }
 
+/* Strict Hero Scroll Lock */
+html.hero-locked,
+body.hero-locked {
+  overflow: hidden !important;
+  height: 100% !important;
+  overscroll-behavior: none !important;
+}
+
+html.hero-locked .hero-pinned {
+  touch-action: none;
+}
+
 img, video {
   max-width: 100%;
   height: auto;
@@ -2456,6 +2468,31 @@ body.cursor-hover .custom-cursor-ring {
     right: 1.5rem;
     width: 50px;
     height: 50px;
+  }
+  .hero-video-lock-controller {
+    bottom: 4.2rem;
+    width: 94%;
+    max-width: 360px;
+  }
+  .hero-video-badge {
+    padding: 0.55rem 1rem;
+    font-size: 0.65rem;
+    cursor: pointer;
+  }
+  .hero-skip-link {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0.85;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 0.2rem;
+  }
+  .hero-scroll-indicator {
+    bottom: 1rem;
   }
 }
 
